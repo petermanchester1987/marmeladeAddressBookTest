@@ -1,43 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
+import AddressContext from '../../context/addresses/addressContext';
 
-const Search = ({  manual, setManual, setAlert }) => {
-  const [text, setText] = useState("");
-  const [name, setName] = useState("");
-  const [address1, setAddress1] = useState("");
-  const [address2, setAddress2] = useState("");
-  const [town, setTown] = useState("");
-  const [county, setCounty] = useState("");
-  const [postcode, setPostcode] = useState("");
-  const [email, setEmail] = useState("");
-  const [telephone, setTelephone] = useState("");
+const Search = () => {
+
+  const addressContext = useContext(AddressContext); 
+  
+  const { 
+    address1,
+    address2,
+    town,
+    county,
+    postcode,
+    telephone,
+    email,
+    contacts,
+    loading,
+    seeManual,
+    showManual,
+    searchPostcode } = addressContext;
+
+
+  const showAddress = () => {
+    console.log(showManual);
+  }
   
 
-  const searchUsers = async (text) => {
-    console.log(text)
-};
-
   const onChange = (e) => {
-    setText({[e.target.name]: e.target.value });
+    console.log(e.target.value)
+    //setText({[e.target.name]: e.target.value });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (text === "") {
-      setAlert("Please enter a seach term", "light");
-    } else {
-      searchUsers(text);
-      setText("");
+    console.log(e)
+    
     }
-  };
+    
 
-  
-
-  if(!manual) return ( <input
+  if(!seeManual) return ( <input
     type="submit"
     className="btn btn-dark btn-block"
     value="Enter Address Info Manually"
-    onClick={e => setManual(true)}
+    onClick={showManual}
 />)
   return (
     <div className="container">
@@ -80,7 +85,7 @@ const Search = ({  manual, setManual, setAlert }) => {
         />
        
         <input
-          type="telephone"
+          type="text"
           name="telephone"
           placeholder="Add Telephone"
           value={telephone}
@@ -103,8 +108,7 @@ const Search = ({  manual, setManual, setAlert }) => {
 };
 
 Search.propTypes = {
-  manual: PropTypes.bool.isRequired,
-  setAlert: PropTypes.func.isRequired,
+  
 };
 
 export default Search;

@@ -1,7 +1,9 @@
 import { 
     SEARCH_POSTCODE,
     SET_LOADING,
-    SET_INFO
+    SHOW_MANUAL,
+    DELETE_ADDRESS,
+    SET_NAME,
 
 } from '../constants';
 
@@ -11,18 +13,31 @@ export default (state, action) => {
              return {
                  ...state,
                  showInfo: true,
-                 postcode: action.payload,
+                 postcodes: action.payload,
                  loading: false
              }
+             case SET_NAME:
+                 return {
+                     ...state,
+                     name: action.payload,
+                     loading: false
+                 }
+
         case SET_LOADING:
             return {
                 ...state,
                 loading: true
             }
-            case SET_INFO:
+            case DELETE_ADDRESS: 
+            return {
+                ...state,
+                address: [],
+                loading: false
+            }
+            case SHOW_MANUAL:
                 return {
                     ...state,
-                    showInfo: true
+                    seeManual: true
                 }
         default: 
         return state;

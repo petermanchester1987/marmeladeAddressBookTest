@@ -4,7 +4,10 @@ import addressContext from './addressContext';
 import addressReducer from './addressReducer';
 import { 
     SEARCH_POSTCODE,
-    SET_LOADING
+    SET_LOADING,
+    SHOW_MANUAL,
+    DELETE_ADDRESS,
+    SET_NAME
 
 } from '../constants';
 
@@ -24,12 +27,14 @@ const AddressState =  props => {
         address2: '',
         town: '',
         county: '',
+        postcodes: [],
         postcode: '',
         telephone: '',
         email: '',
-        contact: {},
+        contacts: [],
         loading: false,
-        showInfo: false,
+        seeManual: false,
+    
     }
 
     //we use the useReducer hook to set the state around our App
@@ -38,25 +43,37 @@ const AddressState =  props => {
     //These will be my actions
     //Search postcode
 
-    const searchPostcode = async text => {
+    const searchPostcode = async (postcode) => {
         setLoading();
 
         const res = await axios.get(
-            `/api/${text}`
+            `/api/${postcode}`
         )
 
        dispatch({
            type: SEARCH_POSTCODE,
-           payload: res.data.items
+           payload: res.data
        })
     }
 
     //get addresses
 
+    //Set name
+    const setName = (name) => dispatch({ 
+        type: SET_NAME,
+        payload: name
+     })
+
     //show addresses
+
+    //delete address
+    const deleteAddress = () => dispatch({ type: DELETE_ADDRESS })
 
     //set loading
     const setLoading = () => dispatch({ type: SET_LOADING });
+
+    //show manual
+    const showManual = () => dispatch({ type: SHOW_MANUAL });
 
     //we return the provider , this wraps our application and will pass 
     // on our data all around the application
@@ -68,12 +85,16 @@ const AddressState =  props => {
             town: state.town,
             county: state.county,
             postcode: state.postcode,
+            postcodes: state.postcodes,
             telephone: state.telephone,
             email: state.email,
             contacts: state.contacts,
             loading: state.loading,
-            showInfo: state.showInfo,
-            searchPostcode
+            seeManual: state.seeManual,
+            showManual,
+            searchPostcode,
+            setLoading,
+            setName
 
 
         }}>

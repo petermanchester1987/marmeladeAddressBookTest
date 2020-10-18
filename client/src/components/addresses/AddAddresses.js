@@ -7,20 +7,31 @@ import AddressContext from '../../context/addresses/addressContext';
 const Search = ({  setAlert }) => {
 
   const addressContext = useContext(AddressContext); 
+
+  const { 
+    setName,
+    
+    searchPostcode
+
+   } = addressContext;
   
 
-  const onChange = (e) => {
-    setText({[e.target.name]: e.target.value });
-  };
+   const debounce = (fn, delay) => {
+    let timer = null;
+    return function (...args) {
+        const context = this;
+        timer && clearTimeout(timer);
+        timer = setTimeout(() => {
+            fn.apply(context, args);
+        }, delay);
+    };
+}
+   
+  
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (text === "") {
-      setAlert("Please enter a Post Code", "light");
-    } else {
-      addressContext.searchUsers(text);
-      setText("");
-    }
+   
   };
 
   return (
@@ -30,22 +41,21 @@ const Search = ({  setAlert }) => {
           type="text"
           name="name"
           placeholder="Enter New Address Name"
-          value={name}
-          onChange={onChange}
+         
+          onChange={e => setName(e.target.value)}
         />
         <label htmlFor="quickform">Fill In Form Quickly</label>
          <input
           type="text"
           name="quickform"
           placeholder="Enter Postcode"
-          value={text}
-          onChange={onChange}
+          onChange={e => debounce(searchPostcode, 300)}
         />
 
         Or
         
         
-            <ManualAddresses manual={manual} setManual={setManual} />
+            <ManualAddresses />
         
       </form>
       
