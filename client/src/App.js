@@ -6,7 +6,7 @@ import AddressState from './context/addresses/AddressState';
 import './App.css';
 import Navbar from './components/layout/Navbar';
 import AddAddresses from './components/addresses/AddAddresses';
-import Addresses from './components/addresses/Addresses';
+import AddressList from './components/addresses/AddressList';
 
 
 function App() {
@@ -52,7 +52,7 @@ function App() {
             <Route exact path="/addresses" 
             render={(props) => (
                 <Fragment>
-                  <Addresses />
+                  <AddressList />
                 </Fragment>
               )} />
 

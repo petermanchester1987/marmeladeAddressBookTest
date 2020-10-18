@@ -80,7 +80,7 @@ const Search = ({  manual, setManual, setAlert }) => {
         />
        
         <input
-          type="telephone"
+          type="text"
           name="telephone"
           placeholder="Add Telephone"
           value={telephone}
