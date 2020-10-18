@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import SearchAddresses from './SearchAddresses';
 import ManualAddresses from './ManualAddresses';
 import AddressContext from '../../context/addresses/addressContext';
+import { throttle } from 'throttle-debounce';
 
 const Search = ({  setAlert }) => {
 
@@ -14,18 +15,27 @@ const Search = ({  setAlert }) => {
     searchPostcode
 
    } = addressContext;
+
+   const throttleFunc = throttle(3000, (e) => {
+     searchPostcode(e.target.value)
+   } )
+
+//    const debounce = (fn, delay) => {
+//     let timer = null;
+//     return function (...args) {
+//         const context = this;
+//         timer && clearTimeout(timer);
+//         timer = setTimeout(() => {
+//             fn.apply(context, args);
+//         }, delay);
+//     };
+// }
   
 
-   const debounce = (fn, delay) => {
-    let timer = null;
-    return function (...args) {
-        const context = this;
-        timer && clearTimeout(timer);
-        timer = setTimeout(() => {
-            fn.apply(context, args);
-        }, delay);
-    };
-}
+//    const debouncedSearch = (postcode) => {
+//       debounce(searchPostcode(postcode), 300)
+//    }
+   
    
   
 
@@ -42,14 +52,14 @@ const Search = ({  setAlert }) => {
           name="name"
           placeholder="Enter New Address Name"
          
-          onChange={e => setName(e.target.value)}
+          onChange={e => setName(e)}
         />
         <label htmlFor="quickform">Fill In Form Quickly</label>
          <input
           type="text"
           name="quickform"
           placeholder="Enter Postcode"
-          onChange={e => debounce(searchPostcode, 300)}
+          onChange={throttleFunc}
         />
 
         Or
