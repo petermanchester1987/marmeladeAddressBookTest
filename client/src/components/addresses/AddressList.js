@@ -5,6 +5,9 @@ const AddressList = () => {
     return (
         <div>
             <Address />
+            <Address />
+            <Address />
+           
         </div>
     )
 }

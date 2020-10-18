@@ -7,7 +7,16 @@ import {
 
 } from '../constants';
 
+/* As I mentioned, I added the Context API because I wanted to practise 
+using context and hooks.
+
+I thought I would only need one context, the address context, 
+as that is what will be used on both main components
+*/
+
 const AddressState =  props => {
+
+    //This is setting the initial global state.
     const initialState = {
         name: '',
         address1: '',
@@ -20,12 +29,18 @@ const AddressState =  props => {
         contact: {}
     }
 
+    //we use the useReducer hook to set the state around our App
     const [state, dispatch ] = useReducer(addressReducer, initialState);
 
+    //These will be my actions
     //Search postcode
+
+    //get addresses
 
     //show addresses
 
+    //we return the provider , this wraps our application and will pass 
+    // on our data all around the application
     return <addressContext.Provider
         value={{
             name: state.name,
@@ -38,10 +53,9 @@ const AddressState =  props => {
             email: state.email,
             contacts: state.contacts,
 
-        }}
-    >
-{props.children}
-    </addressContext.Provider>
+        }}>
+            {props.children}
+        </addressContext.Provider>
 }
 
 export default AddressState;
