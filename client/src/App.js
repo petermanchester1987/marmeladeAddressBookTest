@@ -23,9 +23,12 @@ function App() {
 
 
   return (
-     /* Wrapping everything in a browser router component so that I can then
+    /* Wrap everything in a state provider. */
+    
+     /* Also wrapping everything in a Browser Router component so that I can then
       put in a Switch and two Routes to either show the form entry page
-      or the added addresses */
+      or the address list */
+
        /* Added a Nav component for both pages so you can switch between the two */
        /* Added an alert component so I can show alerts when adding an address */
     <AddressState>

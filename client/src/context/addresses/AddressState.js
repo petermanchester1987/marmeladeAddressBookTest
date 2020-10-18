@@ -3,7 +3,8 @@ import axios from 'axios';
 import addressContext from './addressContext';
 import addressReducer from './addressReducer';
 import { 
-    SEARCH_POSTCODE
+    SEARCH_POSTCODE,
+    SET_LOADING
 
 } from '../constants';
 
@@ -26,7 +27,9 @@ const AddressState =  props => {
         postcode: '',
         telephone: '',
         email: '',
-        contact: {}
+        contact: {},
+        loading: false,
+        showInfo: false,
     }
 
     //we use the useReducer hook to set the state around our App
@@ -35,9 +38,25 @@ const AddressState =  props => {
     //These will be my actions
     //Search postcode
 
+    const searchPostcode = async text => {
+        setLoading();
+
+        const res = await axios.get(
+            `/api/${text}`
+        )
+
+       dispatch({
+           type: SEARCH_POSTCODE,
+           payload: res.data.items
+       })
+    }
+
     //get addresses
 
     //show addresses
+
+    //set loading
+    const setLoading = () => dispatch({ type: SET_LOADING });
 
     //we return the provider , this wraps our application and will pass 
     // on our data all around the application
@@ -52,6 +71,10 @@ const AddressState =  props => {
             telephone: state.telephone,
             email: state.email,
             contacts: state.contacts,
+            loading: state.loading,
+            showInfo: state.showInfo,
+            searchPostcode
+
 
         }}>
             {props.children}

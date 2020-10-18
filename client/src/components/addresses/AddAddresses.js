@@ -1,18 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import SearchAddresses from './SearchAddresses';
 import ManualAddresses from './ManualAddresses';
+import AddressContext from '../../context/addresses/addressContext';
 
 const Search = ({  setAlert }) => {
-  const [text, setText] = useState("");
-  const [name, setName] = useState("");
-  const [manual, setManual] = useState(false);
 
+  const addressContext = useContext(AddressContext); 
   
-
-  const searchUsers = async (text) => {
-    console.log(text)
-};
 
   const onChange = (e) => {
     setText({[e.target.name]: e.target.value });
@@ -21,9 +16,9 @@ const Search = ({  setAlert }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (text === "") {
-      setAlert("Please enter a seach term", "light");
+      setAlert("Please enter a Post Code", "light");
     } else {
-      searchUsers(text);
+      addressContext.searchUsers(text);
       setText("");
     }
   };
