@@ -1,31 +1,37 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 
 
-const Navbar = ({ title }) => {
+const Navbar = ({ icon, title }) => {
 
     return (
         <nav className="navbar bg-primary">
         <h1>
-          <i className={icon}></i> {title}
+            <i className={icon}></i> {title}
         </h1>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/">Add Address</Link>
           </li>
   
           <li>
-            <Link to="/about">About</Link>
+            <Link to="/addresses">Your Addresses</Link>
           </li>
         </ul>
       </nav>
     )
 }
 
+Navbar.defaultProps = {
+    title: "marmalade Address Book",
+    icon: "fas fa-address-card",
+  };
+
 Navbar.propTypes = {
     title: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
 }
 
 export default Navbar
