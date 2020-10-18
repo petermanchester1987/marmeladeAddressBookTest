@@ -1,17 +1,34 @@
-import React, { Fragment } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import React, { useState, Fragment } from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
+// bringing in state wrapper from context
+import AddressState from './context/addresses/AddressState';
 import './App.css';
 import Navbar from './components/layout/Navbar';
+import AddAddresses from './components/addresses/AddAddresses';
+import Addresses from './components/addresses/Addresses';
 
 
 function App() {
+
+  const [alert, setAlert] = useState(null);
+
+
+  //Add Simple Alert to parent app 
+  const showAlert = (msg, type) => {
+    setAlert({ msg, type });
+
+    setTimeout(() => setAlert(null), 5000);
+  };
+
+
   return (
      /* Wrapping everything in a browser router component so that I can then
       put in a Switch and two Routes to either show the form entry page
       or the added addresses */
        /* Added a Nav component for both pages so you can switch between the two */
        /* Added an alert component so I can show alerts when adding an address */
+    <AddressState>
     <BrowserRouter>
     
     <div className="App">
@@ -19,10 +36,33 @@ function App() {
     
        <Navbar />
 
+       <Switch>
+       <Route
+              exact
+              path="/"
+              render={(props) => (
+                <Fragment>
+                  <AddAddresses
+                    setAlert={showAlert}
+                  />
+                </Fragment>
+              )}
+            />
+
+            <Route exact path="/addresses" 
+            render={(props) => (
+                <Fragment>
+                  <Addresses />
+                </Fragment>
+              )} />
+
+       </Switch>
+
 
    
     </div>
     </BrowserRouter>
+    </AddressState>
   )
 }
 
