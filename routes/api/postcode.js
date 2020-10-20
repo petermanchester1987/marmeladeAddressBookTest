@@ -22,6 +22,24 @@ try {
 
 //${config.get('clientKey')}${config.get('clientSecret')}
 
+//GET ADDRESS FROM POSTCODE
+
+router.get('/address/:postcode', async (req, res) => {
+  try {
+
+ 
+    const addressRes = await axios.get(
+      `https://api.getAddress.io/find/${req.params.postcode}?api-key=${config.get("getAddressIoApiKey")}`
+      );
+      return res.json(addressRes.data);
+    } catch (err) {
+
+    console.error(err.message);
+    return res.status(404).json({ msg: 'No Postcode found' });
+    }
+  });
+
+
 
 
   module.exports = router;

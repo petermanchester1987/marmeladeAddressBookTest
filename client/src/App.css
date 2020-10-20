@@ -319,6 +319,7 @@ input {
 }
 
 input[type="text"],
+input[type="data-list"],
 input[type="email"],
 input[type="password"],
 input[type="date"],

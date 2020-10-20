@@ -7,9 +7,19 @@ import {
     SET_LOADING,
     SHOW_MANUAL,
     DELETE_ADDRESS,
-    SET_NAME
+    SET_NAME,
+    SET_POSTCODE,
+    SEARCH_ADDRESS,
+    SET_LINE_ONE,
+    SET_LINE_TWO,
+    SET_TOWN,
+    SET_COUNTY,
+    SET_EMAIL,
+    SET_TELEPHONE,
+    SET_ADDRESS
 
 } from '../constants';
+
 
 /* As I mentioned, I added the Context API because I wanted to practise 
 using context and hooks.
@@ -22,15 +32,16 @@ const AddressState =  props => {
 
     //This is setting the initial global state.
     const initialState = {
-        name: '',
-        address1: '',
-        address2: '',
-        town: '',
-        county: '',
+        name: "",
+        address1: "",
+        address2: "",
+        town: "",
+        county: "",
         postcodes: [],
-        postcode: '',
-        telephone: '',
-        email: '',
+        addresses: [],
+        postcode: "",
+        telephone: "",
+        email: "",
         contacts: [],
         loading: false,
         seeManual: false,
@@ -64,7 +75,61 @@ const AddressState =  props => {
         payload: name
      })
 
-    //show addresses
+     //set Postcode
+     const setPostcode = (postcode) => dispatch({ 
+        type: SET_POSTCODE,
+        payload: postcode
+     })
+
+     //set Line 1
+     const setLineOne = (lineOne) => dispatch({
+         type: SET_LINE_ONE,
+         payload: lineOne
+     })
+     //set Line 2
+     const setLineTwo = (lineTwo) => dispatch({
+         type: SET_LINE_TWO,
+         payload: lineTwo
+     })
+     //set Line 1
+     const setTown = (town) => dispatch({
+         type: SET_TOWN,
+         payload: town
+     })
+     //set Line 1
+     const setCounty = (county) => dispatch({
+         type: SET_COUNTY,
+         payload: county
+     })
+     //set Line 1
+     const setEmail = (email) => dispatch({
+         type: SET_EMAIL,
+         payload: email
+     })
+     //set Line 1
+     const setTelephone = (telephone) => dispatch({
+         type: SET_TELEPHONE,
+         payload: telephone
+     })
+
+     //set address
+     const setAddress = address => dispatch({
+         type: SET_ADDRESS,
+         payload: address
+     })
+
+    //search address
+    const searchAddress = async (searchPostcode) => {
+        setLoading();
+
+        const res = await axios.get(
+            `/api/address/${searchPostcode}`
+        )
+            dispatch({
+                type: SEARCH_ADDRESS,
+                payload: res.data
+            })
+    }
 
     //delete address
     const deleteAddress = () => dispatch({ type: DELETE_ADDRESS })
@@ -86,6 +151,7 @@ const AddressState =  props => {
             county: state.county,
             postcode: state.postcode,
             postcodes: state.postcodes,
+            addresses: state.addresses,
             telephone: state.telephone,
             email: state.email,
             contacts: state.contacts,
@@ -94,7 +160,17 @@ const AddressState =  props => {
             showManual,
             searchPostcode,
             setLoading,
-            setName
+            setName,
+            setPostcode,
+            setLineOne,
+            setLineTwo,
+            setTown,
+            setCounty,
+            setPostcode,
+            setTelephone,
+            setEmail,
+            setAddress,
+            searchAddress
 
 
         }}>

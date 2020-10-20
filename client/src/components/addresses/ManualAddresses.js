@@ -7,6 +7,7 @@ const Search = () => {
   const addressContext = useContext(AddressContext); 
   
   const { 
+    name,
     address1,
     address2,
     town,
@@ -18,6 +19,14 @@ const Search = () => {
     loading,
     seeManual,
     showManual,
+    setName,
+    setLineOne,
+    setLineTwo,
+    setTown,
+    setCounty,
+    setPostcode,
+    setTelephone,
+    setEmail,
     searchPostcode } = addressContext;
 
 
@@ -27,8 +36,7 @@ const Search = () => {
   
 
   const onChange = (e) => {
-    console.log(e.target.value)
-    //setText({[e.target.name]: e.target.value });
+    
   };
 
   const onSubmit = (e) => {
@@ -49,31 +57,38 @@ const Search = () => {
       
         <input
           type="text"
+          name="name"
+          placeholder="Enter Address Name"
+          value={name}
+          onChange={e => setName(e.target.value)}
+        />
+        <input
+          type="text"
           name="address1"
           placeholder="Enter Address Line 1"
           value={address1}
-          onChange={onChange}
+          onChange={e => setLineOne(e.target.value)}
         />
         <input
           type="text"
           name="address2"
           placeholder="Enter Address Line 2"
           value={address2}
-          onChange={onChange}
+          onChange={e => setLineTwo(e.target.value)}
         />
         <input
           type="text"
           name="town"
           placeholder="Enter Town/City"
           value={town}
-          onChange={onChange}
+          onChange={e => setTown(e.target.value)}
         />
         <input
           type="text"
           name="county"
           placeholder="Enter County"
           value={county}
-          onChange={onChange}
+          onChange={e => setCounty(e.target.value)}
         />
 
         <input
@@ -81,7 +96,7 @@ const Search = () => {
           name="postcode"
           placeholder="Enter Postcode"
           value={postcode}
-          onChange={onChange}
+          onChange={e => setPostcode(e.target.value)}
         />
        
         <input
@@ -89,19 +104,19 @@ const Search = () => {
           name="telephone"
           placeholder="Add Telephone"
           value={telephone}
-          onChange={onChange}
+          onChange={e => setTelephone(e.target.value)}
         />
         <input
           type="email"
           name="email"
           placeholder="Add Email"
           value={email}
-          onChange={onChange}
+          onChange={e => setEmail(e.target.value)}
         />
         <input
           type="submit"
           className="btn btn-dark btn-block"
-          value="Search"
+          value="Submit"
         />
     </div>
   );
