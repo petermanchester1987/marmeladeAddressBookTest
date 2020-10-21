@@ -2,7 +2,10 @@ import {
     SEARCH_POSTCODE,
     SET_LOADING,
     SHOW_MANUAL,
-    DELETE_ADDRESS,
+    DELETE_CONTACT,
+    EDIT_CONTACT,
+    GET_CONTACT,
+    GET_CONTACTS,
     SET_NAME,
     SET_POSTCODE,
     SEARCH_ADDRESS,
@@ -13,6 +16,7 @@ import {
     SET_EMAIL,
     SET_TELEPHONE,
     SET_ADDRESS,
+    ADD_CONTACT
 
 } from '../constants';
 
@@ -88,27 +92,42 @@ export default (state, action) => {
                         address2: action.payload[1],
                         town: action.payload[5],
                         county: action.payload[6],
-                        
+
+                        loading: false,
+                    }
+                case ADD_CONTACT:
+                    return {
+                        ...state,
+                        contacts: [action.payload, ...state.contacts],
+                        loading: false,
+                    }
+                case GET_CONTACTS:
+                    return {
+                        ...state,
+                        contacts: state.contacts,
                         loading: false,
                     }
 
-        case SET_LOADING:
-            return {
-                ...state,
-                loading: true
+                case SET_LOADING:
+                    return {
+                        ...state,
+                        loading: true
+                    }
+
+                    // Filter through the contacts to remove the one with the same postcode
+                    // I realise it would be better to add an identifier key in production
+                    case DELETE_CONTACT: 
+                    return {
+                        ...state,
+                        contacts: state.contacts.filter((contact) => contact.postcode !== action.payload),
+                        loading: false
+                    }
+                    case SHOW_MANUAL:
+                        return {
+                            ...state,
+                            seeManual: true
+                        }
+                default: 
+                return state;
             }
-            case DELETE_ADDRESS: 
-            return {
-                ...state,
-                address: [],
-                loading: false
-            }
-            case SHOW_MANUAL:
-                return {
-                    ...state,
-                    seeManual: true
-                }
-        default: 
-        return state;
-    }
 }

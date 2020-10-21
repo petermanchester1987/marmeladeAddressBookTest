@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import Address from './Address';
 import AddressContext from '../../context/addresses/addressContext';
 import Spinner from '../layout/Spinner';
-import SearchAddresses from './SearchAddresses';
 
 const AddressList = () => {
 

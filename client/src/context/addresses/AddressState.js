@@ -6,7 +6,8 @@ import {
     SEARCH_POSTCODE,
     SET_LOADING,
     SHOW_MANUAL,
-    DELETE_ADDRESS,
+    DELETE_CONTACT,
+    EDIT_CONTACT,
     SET_NAME,
     SET_POSTCODE,
     SEARCH_ADDRESS,
@@ -16,7 +17,10 @@ import {
     SET_COUNTY,
     SET_EMAIL,
     SET_TELEPHONE,
-    SET_ADDRESS
+    SET_ADDRESS,
+    ADD_CONTACT,
+    GET_CONTACTS,
+    GET_CONTACT
 
 } from '../constants';
 
@@ -131,8 +135,27 @@ const AddressState =  props => {
             })
     }
 
-    //delete address
-    const deleteAddress = () => dispatch({ type: DELETE_ADDRESS })
+    // add Contact
+    const addContact = (contact) => dispatch({
+        type: ADD_CONTACT,
+        payload: contact
+    })
+
+    //get all contacts
+    const getContacts = () => dispatch({
+        type: GET_CONTACTS,
+    })
+
+    //edit contact
+    const editContact = (contact) => dispatch({ 
+        type: EDIT_CONTACT,
+        payload: contact
+    })
+    //delete contact
+    const deleteContact = (postcode) => dispatch({ 
+        type: DELETE_CONTACT,
+        payload: postcode
+    })
 
     //set loading
     const setLoading = () => dispatch({ type: SET_LOADING });
@@ -170,7 +193,10 @@ const AddressState =  props => {
             setTelephone,
             setEmail,
             setAddress,
-            searchAddress
+            searchAddress,
+            addContact,
+            deleteContact,
+            getContacts
 
 
         }}>

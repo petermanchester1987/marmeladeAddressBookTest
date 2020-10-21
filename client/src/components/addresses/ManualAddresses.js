@@ -1,8 +1,10 @@
-import React, { useState, useContext } from "react";
-import PropTypes from "prop-types";
+import React, { useState, useContext, Fragment } from "react";
+import { Redirect } from 'react-router-dom';
 import AddressContext from '../../context/addresses/addressContext';
 
 const Search = () => {
+
+  const [contactAdded, setContactAdded ] = useState(false);
 
   const addressContext = useContext(AddressContext); 
   
@@ -15,8 +17,6 @@ const Search = () => {
     postcode,
     telephone,
     email,
-    contacts,
-    loading,
     seeManual,
     showManual,
     setName,
@@ -27,7 +27,9 @@ const Search = () => {
     setPostcode,
     setTelephone,
     setEmail,
-    searchPostcode } = addressContext;
+    addContact,
+    
+} = addressContext;
 
 
   const showAddress = () => {
@@ -39,21 +41,52 @@ const Search = () => {
     
   };
 
+  const createContact = (
+    { name,
+    address1,
+    address2,
+    town,
+    county,
+    postcode,
+    telephone,
+    email }
+    ) => {
+
+    return {
+      name,
+      address1,
+      address2,
+      town,
+      county,
+      postcode,
+      telephone,
+      email
+    }
+  }
+
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(e)
-    
+    const contact = createContact(addressContext);
+    addContact(contact);
+    setContactAdded(true);
     }
-    
-
-  if(!seeManual) return ( <input
+    if(contactAdded) return (
+    <Redirect to="/addresses" />
+    )
+  else if(!seeManual) return ( 
+  <Fragment>
+    <p>Or</p>
+  
+  <input
     type="submit"
     className="btn btn-dark btn-block"
     value="Enter Address Info Manually"
-    onClick={showManual}
-/>)
+    onClick={showManual}/>
+  </Fragment>
+)
   return (
     <div className="container">
+       <form onSubmit={onSubmit} action="" className="form">
       
         <input
           type="text"
@@ -117,7 +150,9 @@ const Search = () => {
           type="submit"
           className="btn btn-dark btn-block"
           value="Submit"
+          
         />
+        </form>
     </div>
   );
 };
